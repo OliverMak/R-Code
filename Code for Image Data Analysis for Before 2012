@@ -1,3 +1,6 @@
+library(readxl)
+library(emmeans)
+
 setwd("~/Desktop/R Studio Assignment ")
 
 #Database
