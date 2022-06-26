@@ -1,0 +1,57 @@
+setwd("~/Desktop/R Studio Assignment ")
+
+#Database
+database <- read_excel("Images Before 2012.xlsx")
+
+
+#Anova test to see the difference in the % of Women amongst the different geographical regions
+
+database$categorical <- factor(database$`Categorical Type of Public Space`)
+
+database$women <- database$'% of Women/ Total Population'
+
+aggregate(women ~ categorical, database, mean)
+
+anova_reg_wom <- aov(women ~ categorical, data=database)
+
+summary(anova_reg_wom)
+
+
+comparison <- emmeans(anova_reg_wom, "categorical")
+
+pairs(comparison, adjust="tukey")
+
+plot(comparison)
+
+
+#Anova test to see the difference in the number of stationary men by location
+
+database$men <- database$`% of Stationary Men/ Total Men`
+
+aggregate(men ~ categorical, database, mean)
+
+anova_reg_stationary_men <- aov(men  ~ categorical, data=database )
+
+summary(anova_reg_stationary_men)
+
+comparison_men <- emmeans(anova_reg_stationary_men, "categorical")
+
+pairs(comparison_men, adjust="tukey")
+
+
+plot(comparison_men)
+
+
+#Stationary women/total women 
+
+database$stat_women <- database$`% of Stationary Women/ Total Women`
+
+aggregate(stat_women ~ categorical, database, mean)
+
+anova_reg_stationary_women <- aov(stat_women  ~ categorical, data=database )
+
+summary(anova_reg_stationary_women)
+
+comparison_stat_women <- emmeans(anova_reg_stationary_women, "categorical")
+
+pairs(comparison_stat_women, adjust="tukey")
